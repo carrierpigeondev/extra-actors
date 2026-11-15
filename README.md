@@ -1,7 +1,5 @@
-# http-actor
+# extra actors
 
-http-actor is a ScryptKyddy actor that uses an operating system agnostic Zig http library to make a web request, rather
-than rely on whatever is installed on the current system.
+This is a monorepo containing multiple ScryptKyddy Actors (their projects) and a Catalogue.
 
-## TODO:
-Support in development Actors API (Broadcast, Fetch, & Install roles).
+ScryptKyddy's `!bootstrap` step contains a Catalogue able to fetch this repository's Catalogue.
