@@ -1,7 +1,18 @@
+.idea/
 zig-cache/
-.zig-cache/
+unzip-actor/.zig-cache/
 zig-out/
 build/
 build-*/
 docgen_tmp/
 .zbscanhelper.zig
+/actors-bin/
+/actor-bin/
+/zig-out/
+**/.zig-cache/
+.env
+/zig-pkg/
+**/zig-pkg/
+
+# created by buildall.bash
+_binaries/

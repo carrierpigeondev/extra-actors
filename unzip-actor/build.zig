@@ -11,11 +11,21 @@ pub fn build(b: *std.Build) !void {
     });
 
     const exe = b.addExecutable(.{
-        .name = "http-actor",
+        .name = "unzip-actor",
         .root_module = exe_mod,
     });
 
-    b.installArtifact(exe);
+    const install = b.addInstallArtifact(exe, .{
+        .dest_dir = .{ .override = .prefix },
+    });
+
+    b.getInstallStep().dependOn(&install.step);
+
+    const archive = b.dependency("archive", .{
+        .target = target,
+        .optimize = optimize,
+    });
+    exe.root_module.addImport("archive", archive.module("archive"));
 
     //
     // run step
