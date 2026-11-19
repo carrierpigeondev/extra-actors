@@ -10,7 +10,6 @@ fn broadcast(io: std.Io) !void {
 ///   - argv[1] : "install"
 ///   - argv[2] : Output Directory
 ///   - argv[3] : Output Name
-///   - argv[4] : Output Symlink Path
 ///
 ///  extracts contents, detects the primary file name, (NYI: and creates a symlink)
 
@@ -62,29 +61,15 @@ fn install(io: std.Io, alloc: std.mem.Allocator, argv: []const []const u8) !void
         }
     }
 
-    // do not create symlink if left empty
-    if (std.mem.eql(u8, argv[4], "")) {
-        return;
-    }
-
     // then also create the symlink to the found executable or error if nothing was detected
     //
     // the files are already extracted however, so the user... if they know what they're doing... can manually symlink
     // or maybe even do something with a postinstallation role down the line
     const entry_path = executable_path orelse return error.ExecutableNotFound;
-
-    const path_of_file = try std.fs.path.join(alloc, &.{
-        argv[2], entry_path,
+    const write_out_path = try std.fs.path.join(alloc, &.{
+        argv[2], entry_path
     });
-    defer alloc.free(path_of_file);
-
-    return std.Io.Dir.cwd().symLink(io, path_of_file, argv[4], .{}) catch |err| {
-        if (err == std.Io.Dir.SymLinkError.PathAlreadyExists) {
-            return;
-        } else {
-            return err;
-        }
-    };
+    try std.Io.File.stdout().writeStreamingAll(io, write_out_path);
 }
 
 pub fn main(init: std.process.Init) !void {
