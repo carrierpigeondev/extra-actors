@@ -17,3 +17,13 @@
     [[scrypts.roles]]
         role = "install"
         actor = "single-file-write-actor"
+
+[[scrypts]]
+    id = "windows-shortcut-actor.exe"
+    source = "https://github.com/carrierpigeondev/extra-actors/releases/download/2026-11-19_2014/windows-shortcut-actor-x86_64-windows.exe"
+    [[scrypts.roles]]
+        role = "fetch"
+        actor = "http-actor"
+    [[scrypts.roles]]
+        role = "install"
+        actor = "single-file-write-actor"
